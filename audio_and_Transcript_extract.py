@@ -179,15 +179,15 @@ if __name__=='__main__':
         df_update['Label'][i]=label
 
     #updating the file names here 
-#    df_update['File_Name']=[df_update['id'][i]+'_clip_'+str(int(df_update['no_of_hits'][i]))+'_'+df_update['Label'][i]+'__'+df_update['start_time'][i]+'-'+df_update['end_time'][i] for i in range(len(df_update))]
+    df_update['File_Name']=[df_update['id'][i]+'_clip_'+str(int(df_update['no_of_hits'][i]))+'_'+df_update['Label'][i]+'__'+df_update['start_time'][i]+'-'+df_update['end_time'][i] for i in range(len(df_update))]
 
     #downloading the audio dataset here 
- #   file_path_audio='d:\\Himani-work\\gsoc2020\\code\\ideology_wav_5word_Dataset\\'
-  #  download_AudioDataset(file_path_audio,df_update)
+    file_path_audio='d:\\Himani-work\\gsoc2020\\code\\ideology_wav_5word_Dataset\\'
+    download_AudioDataset(file_path_audio,df_update)
 
     #saving the transcripts
-    #file_path_text='d:\\Himani-work\\gsoc2020\\code\\ideology_text_5word_Dataset\\'
-    #save_TranscriptDataset(file_path_text,df_update)
+    file_path_text='d:\\Himani-work\\gsoc2020\\code\\ideology_text_5word_Dataset\\'
+    save_TranscriptDataset(file_path_text,df_update)
 
     # at the end saving the new updated dataset i.e df_update
-   # df_update.to_csv('d:\\Himani-work\\gsoc2020\\code\\ideology_updated_5_Word_dataset.csv')
+    df_update.to_csv('d:\\Himani-work\\gsoc2020\\code\\ideology_updated_5_Word_dataset.csv')
