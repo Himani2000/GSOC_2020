@@ -5,58 +5,61 @@ import re
 import requests
 import urllib.parse
 
+def update_StartEndTime(df,word_length=5):
 
-def update_StartEndTime(df,word_look=5):
     """
-    function: The aim of the function is to extract new start and end time of the audio. The new time is
+    function: The aim of the function is to extract new start ,end time and the transcripts of the audio. The new time is
     calculated by considering the words equal to (word_look) left and right to the query word.
 
     input: the original dataframe having all the details 
 
     output: a)start_timeList : containing the updated start time of all the audio files
             b)end_timeList : containg the updated end time of all the audio files
+            c)transcripts: a list containing the updated transcript of all the audio files
 
     """
     start_timeList=[]
     end_timeList=[]
-
-    for i in range(len(df)):
-        try:
-        # print(i)
-            s=".".join(df['Tagged context before'][i].split(' ')[-word_look:][0].split('/')[1:3])
-            e=".".join(df['Tagged context after'][i].split(' ')[word_look-1].split('/')[3:])
-            start_timeList.append(s)
-            end_timeList.append(e)
-        
-        except Exception as e:
-            print(e)
-    return start_timeList,end_timeList
-
-
-def update_Transcripts(df,word_look=5):
-    
-    """
-    function: The aim of the function is to extract transcript(file having words) the audio. The transcript  is
-    obtained  by considering the words equal to (word_look) left and right to the query word.
-
-    input: the original dataframe having all the details 
-
-    output: a)transcripts: a list containing the updated transcript of all the audio files
-    """
     transcripts=[]
+
+  
     for i in range(len(df)):
-    
         try:
-            text1=" ".join(df['Context before'][i].split(' ')[-word_look:])
-            text2=" ".join(df['Context after'][i].split(' ')[0:word_look])
+            s=" "
+            text1=" "
+            text2=" "
             text3=df['Query item'][i]
+            for j in range(3):
+                
+                if(df['Tagged context before'][i].split(' ')[-word_length+j:][0].split('/')[1:3][1]!='NA'):
+                    s=".".join(df['Tagged context before'][i].split(' ')[-word_length+j:][0].split('/')[1:3])
+                    text1=" ".join(df['Context before'][i].split(' ')[-word_length+j:])
+                    
+                    break
+
+            start_timeList.append(s)
+            e=" "
+            for j in range(3):
+               
+                #print(df['Tagged context after'][i].split(' ')[word_length-j-1].split('/')[1:3],j,word_length-j-1)
+                if(df['Tagged context after'][i].split(' ')[word_length-j-1].split('/')[3:][1]!='NA'):
+                    e=".".join(df['Tagged context after'][i].split(' ')[word_length-j-1].split('/')[3:])
+                    text2=" ".join(df['Context after'][i].split(' ')[0:word_length-j])
+                    
+                    break
+            end_timeList.append(e)
             transcript=" ".join([text1,text3,text2])
-            #print(transcript)
-            transcripts.append(transcript)
+            transcripts.append(transcript)          
+            
+
             
         except Exception as e:
+            start_timeList.append(" ")
+            end_timeList.append(" ")
+            transcripts.append(" ")
             print(e)
-    return transcripts
+
+    return start_timeList,end_timeList,transcripts
 
 def url_helper(start,end,url):
     #the function will update the url of the audio according to the new start 
@@ -129,20 +132,29 @@ def save_TranscriptDataset(file_path,df_update):
         with open(file_path+df_update['File_Name'][i]+'.txt','w') as f:
             f.write(df_update['transcripts'][i])
 
-
-
 if __name__=='__main__':
     #reading the excel file using pandas fucntion
     #later try to give this path as a command line argument
 
-    df=pd.read_excel("D:\Himani-work\gsoc2020\dataset\spreadsheet_data\ideology_concordance_with_rapidannotator_results_and_with_downloadlinks_manually_corrected_mit_timings_ergänzt.xlsx")
+    #df=pd.read_excel("D:\Himani-work\gsoc2020\dataset\spreadsheet_data\ideology_concordance_with_rapidannotator_results_and_with_downloadlinks_manually_corrected_mit_timings_ergänzt.xlsx")
     
+    df=pd.read_excel('/mnt/rds/redhen/gallina/projects/clustering/ideology_complete_Dataset.xlsx')
     # making a new dataframe for the new audio files 
-    df_update=pd.DataFrame(columns=['start_time','end_time','transcripts','wget_url','id','no_of_hits','ai','ee','File_Name','Label'])
-
+    df_update=pd.DataFrame(columns=['start_time','end_time','transcripts','wget_url','base_url','id','no_of_hits','ai','ee','File_Name','Label'])
+    
+    
+    #updating the other information from the dataset
+    df_update['id']=list(df['ID VON HIER'])
+    df_update['no_of_hits']=list(df['Number of hit'])
+    df_update['ai']=list(df['ai'])
+    df_update['ee']=list(df['ee'])
+    df_update['base_url']=list(df['Audio Snippet (long)'])
+    
+    
     #calling the function
-    start_timeList,end_timeList=update_StartEndTime(df,5)
-    transcripts=update_Transcripts(df,5)
+    start_timeList,end_timeList,transcripts=update_StartEndTime(df,5)
+   # 
+    #transcripts=update_Transcripts(df,5)
 
     print(len(transcripts),len(start_timeList),len(end_timeList))
     #updating the dataframe    
@@ -150,21 +162,14 @@ if __name__=='__main__':
     df_update['end_time']=end_timeList
     df_update['transcripts']=transcripts
     
-    # using regex to match for NA and replace it by 0.00
-    df_update['start_time']=[ s.replace('.NA','.00') for s in df_update['start_time']]
-    df_update['end_time']=[ s.replace('.NA','.00') for s in df_update['end_time']]
-
-    #calling the url function to get the updated urls 
-    urls_list=update_url(df_update,df)
-    df_update['wget_url']=urls_list
-
-    #updating the other information from the dataset
-    df_update['id']=list(df['ID VON HIER'][0:len(df_update)])
-    df_update['no_of_hits']=list(df['Number of hit'][0:len(df_update)])
-    df_update['ai']=list(df['ai'][0:len(df_update)])
-    df_update['ee']=list(df['ee'][0:len(df_update)])
-
-
+    df_update=df_update[df_update['start_time']!=" "]
+    df_update=df_update[df_update['end_time']!=" "]
+    
+    df_update.reset_index(drop=True,inplace=True)
+    
+    urls_list=update_url(df_update)
+    df_update['wget_url']=urls_list   
+      
     #updating the labels here
     for i in range(len(df_update)):
         if(df_update['ai'][i]==1):
@@ -177,8 +182,8 @@ if __name__=='__main__':
             label='DELETEME'
         
         df_update['Label'][i]=label
-
-    #updating the file names here 
+        
+     #updating the file names here 
     df_update['File_Name']=[df_update['id'][i]+'_clip_'+str(int(df_update['no_of_hits'][i]))+'_'+df_update['Label'][i]+'__'+df_update['start_time'][i]+'-'+df_update['end_time'][i] for i in range(len(df_update))]
 
     #downloading the audio dataset here 
@@ -186,8 +191,11 @@ if __name__=='__main__':
     download_AudioDataset(file_path_audio,df_update)
 
     #saving the transcripts
-    file_path_text='d:\\Himani-work\\gsoc2020\\code\\ideology_text_5word_Dataset\\'
-    save_TranscriptDataset(file_path_text,df_update)
+    #file_path_text='d:\\Himani-work\\gsoc2020\\code\\ideology_text_5word_Dataset\\'
+    #save_TranscriptDataset(file_path_text,df_update)
 
     # at the end saving the new updated dataset i.e df_update
     df_update.to_csv('d:\\Himani-work\\gsoc2020\\code\\ideology_updated_5_Word_dataset.csv')
+ 
+
+
