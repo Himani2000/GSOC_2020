@@ -194,16 +194,22 @@ if __name__=="__main__":
     df_formant_lpc=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,0,'lpc')
     
     
-    df_formant_20.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_20_muslim_features_vowel.csv',index=False)
+    df_formant_20.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants20_muslim_features_vowel.csv',index=False)
 
-    df_formant_50.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_50_muslim_features_vowel.csv',index=False)
+    df_formant_50.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants50_muslim_features_vowel.csv',index=False)
 
-    df_formant_80.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_80_muslim_features_vowel.csv',index=False)
+    df_formant_80.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants80_muslim_features_vowel.csv',index=False)
 
-    df_formant_lpc.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_lpc_muslim_features_vowel.csv',index=False)
+    df_formant_lpc.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formantsLpc_muslim_features_vowel.csv',index=False)
    
     
-    if __name__=="__main__":
+    
+# In[ ]:
+
+
+
+
+if __name__=="__main__":
     # three variables are needed here the two  basepaths and the dataframe path
     # as an additional feature we can definitely ask for the feature to be extracted
     base_path_textGrid="D://Himani-work/gsoc2020/dataset/ideology_five_words_version2/ideology_textGrid_five_dataset_version2/"
@@ -220,7 +226,19 @@ if __name__=="__main__":
     final_files=list(set(all_audio_files)&set(all_textGrid_files))
     print("final files",len(final_files))
     
-    # Flow is like call the 
+    df=pd.DataFrame({'filename':final_files})
+    splited_df=df['filename'].str.split("clip_",expand=True)
+    labels=splited_df[1].str.split("_",expand=True)
+    actual_labels=labels[1]
+    deleted_labels=actual_labels[actual_labels=='DELETEME']
+
+    df.drop(deleted_labels.index,inplace=True)
+    df.reset_index(drop=True, inplace=True)
+
+    final_files=df['filename']
+    print("final files",len(final_files))
+    
+    
     word=r"ideology"
     pronunciation_vowel="aI"
 
@@ -231,13 +249,13 @@ if __name__=="__main__":
     df_formant_lpc=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,0,'lpc')
     
     
-    df_formant_20.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_20_ideology_five_features_vowel.csv',index=False)
+    df_formant_20.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants20_ideologyFive_features_vowel.csv',index=False)
 
-    df_formant_50.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_50_ideology_five_features_vowel.csv',index=False)
+    df_formant_50.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants50_ideologyFive_features_vowel.csv',index=False)
 
-    df_formant_80.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_80_ideology_five_features_vowel.csv',index=False)
+    df_formant_80.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants80_ideologyFive_features_vowel.csv',index=False)
 
-    df_formant_lpc.to_csv('D://Himani-work/gsoc2020/dataset/Audio_features/formants_lpc_ideology_five_features_vowel.csv',index=False)
+    df_formant_lpc.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formantsLpc_ideologyFive_features_vowel.csv',index=False)
    
     if __name__=="__main__":
     # three variables are needed here the two  basepaths and the dataframe path
@@ -263,10 +281,19 @@ if __name__=="__main__":
     pronunciation_vowel="aI"
 
     
-   # df_formant_20=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,20,'praat')
-   # df_formant_50=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,50,'praat')
-   # df_formant_80=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,80,'praat')
-   # df_formant_lpc=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,0,'lpc')
+    df_formant_20=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,20,'praat')
+    df_formant_50=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,50,'praat')
+    df_formant_80=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,80,'praat')
+    df_formant_lpc=extractAllFormants(final_files,base_path_textGrid,base_path_audio,word,pronunciation_vowel,0,'lpc')
+    
+    df_formant_20.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants20_ideology_features_vowel.csv',index=False)
+
+    df_formant_50.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants50_ideology_features_vowel.csv',index=False)
+
+    df_formant_80.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formants80_ideology_features_vowel.csv',index=False)
+
+    df_formant_lpc.to_csv('D://Himani-work/gsoc2020/code/Audio_Feature_Extraction/Audio_features_vowel/formantsLpc_ideology_features_vowel.csv',index=False)
+   
     
     
    
