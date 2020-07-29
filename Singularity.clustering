@@ -10,10 +10,7 @@ From:ubuntu:latest
         export LC_ALL=en_US.UTF-8
 
 
-%post
-        apt-get update
-        apt-get install -y python3.6 \
-                           python3-pip
+
 %runscript
 echo "This gets run when you run the image!" 
 exec /bin/bash /code/rawr.sh "$@"  
@@ -21,6 +18,10 @@ exec /bin/bash /code/rawr.sh "$@"
 %post  
 echo "This section happens once after bootstrap to build the image."  
 mkdir -p /code  
-pip install pandas
+apt-get update
+apt-get install -y python3.6 \
+                   python3-pip
+
+
 echo "RoooAAAAR" >> /code/rawr.sh
 chmod u+x /code/rawr.sh
