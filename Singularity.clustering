@@ -1,14 +1,19 @@
-Bootstrap:docker  
-From:ubuntu:latest  
+Bootstrap:docker
+From:ubuntu:latest
 
 %labels
-MAINTAINER Vanessasaur
-SPECIES Dinosaur
+        MAINTAINER himaninegi
 
 %environment
-RAWR_BASE=/code
-export RAWR_BASE
+        export LANGUAGE=en_US.UTF-8
+        export LANG=en_US.UTF-8
+        export LC_ALL=en_US.UTF-8
 
+
+%post
+        apt-get update
+        apt-get install -y python3.6 \
+                           python3-pip
 %runscript
 echo "This gets run when you run the image!" 
 exec /bin/bash /code/rawr.sh "$@"  
