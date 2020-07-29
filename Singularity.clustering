@@ -10,11 +10,4 @@ From:ubuntu:latest
         export LC_ALL=en_US.UTF-8
 
 %post
-        apt-get update
-        apt-get install python3 \
-                        python3-pip \
-
-        pip install     numpy         \
-                        scikit-learn  \
-                        matplotlib    \
-                        opencv-python \
+        apt-get install python3 
