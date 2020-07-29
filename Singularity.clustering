@@ -12,10 +12,9 @@ From:ubuntu:latest
 %post
         apt-get update
         apt-get install python3 \
-                        pip    \
+                        python3-pip \
 
-        pip install    numpy         \
+        pip install     numpy         \
                         scikit-learn  \
-                        librosa       \
                         matplotlib    \
                         opencv-python \
