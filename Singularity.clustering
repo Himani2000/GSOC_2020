@@ -2,26 +2,20 @@ Bootstrap:docker
 From:ubuntu:latest
 
 %labels
-        MAINTAINER himaninegi
+        MAINTAINER Himani Negi
 
 %environment
         export LANGUAGE=en_US.UTF-8
         export LANG=en_US.UTF-8
         export LC_ALL=en_US.UTF-8
 
+%post
+        apt-get update
+        apt-get install python3 \
+                        pip3    \
 
-
-%runscript
-echo "This gets run when you run the image!" 
-exec /bin/bash /code/rawr.sh "$@"  
-
-%post  
-echo "This section happens once after bootstrap to build the image."  
-mkdir -p /code  
-apt-get update
-apt-get install -y python3.6 \
-                   python3-pip
-
-
-echo "RoooAAAAR" >> /code/rawr.sh
-chmod u+x /code/rawr.sh
+        pip3 install    numpy         \
+                        scikit-learn  \
+                        librosa       \
+                        matplotlib    \
+                        opencv-python \
