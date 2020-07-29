@@ -10,4 +10,4 @@ From:ubuntu:latest
         export LC_ALL=en_US.UTF-8
 
 %post
-        apt-get install python3 
+        apt-get install -y python3.6
