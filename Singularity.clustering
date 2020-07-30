@@ -19,5 +19,9 @@ From:ubuntu:latest
         pip3 install  numpy
         pip3 install  scipy
         pip3 install  scikit-image
+        pip3 install scikit-learn
         pip3 install  pandas
         pip3 install  dlib
+        pip3 install opencv-python
+        pip3 install face_recognition
+        pip3 install matplotlib
