@@ -11,4 +11,8 @@ From:ubuntu:latest
 
 %post  
         apt-get update
+        apt-get install build-essential cmake
+        apt-get install libgtk-3-dev
+        apt-get install libboost-all-dev
         apt-get install -y python3
+        apt-get install -y python3-pip
