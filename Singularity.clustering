@@ -16,8 +16,8 @@ From:ubuntu:latest
         apt-get install -y libboost-all-dev
         apt-get install -y python3
         apt-get install -y python3-pip
-        pip install -y numpy
-        pip install -y scipy
-        pip install -y scikit-image
-        pip install -y pandas
-        pip install -y dlib
+        pip3 install -y numpy
+        pip3 install -y scipy
+        pip3 install -y scikit-image
+        pip3 install -y pandas
+        pip3 install -y dlib
