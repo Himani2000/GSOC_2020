@@ -19,16 +19,10 @@ module load tensorflow/1.4.0-py3
 
 echo "running the autoencoder script"
 
-#python autoencoder_feature_extraction.py ideology_image_dataset image_features_autoencoder_helper autoencoder_features ideology
+python autoencoder_feature_extraction.py image_dataset image_features autoencoder_features image-dataset-name
 
-#python autoencoder_feature_extraction.py ideology_crop_image_dataset image_features_crop_autoencoder_helper autoencoder_features_crop ideology_crop
-
-echo "extracting the autoencoder features for the person dataset"
-
-python autoencoder_feature_extraction.py ideology_person_dataset ideology_person_dataset_features_conventional ideology_person_dataset_features_autoencoder ideology
+python autoencoder_feature_extraction.py image_dataset image_features autoencoder_features_crop image-dataset-name
 
 
-echo "extracting the features for the face dataset"
 
-python autoencoder_feature_extraction.py ideology_face_dataset ideology_face_dataset_features_conventional ideology_face_dataset_features_autoencoder ideology
 
