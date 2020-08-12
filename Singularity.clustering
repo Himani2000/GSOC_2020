@@ -25,3 +25,4 @@ From:ubuntu:latest
         pip3 install opencv-python
         pip3 install face_recognition
         pip3 install matplotlib
+        pip3 install kneed
