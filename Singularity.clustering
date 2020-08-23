@@ -27,3 +27,4 @@ From:ubuntu:latest
         pip3 install matplotlib
         pip3 install kneed
         pip3 install xlrd
+        pip3 install requests 
