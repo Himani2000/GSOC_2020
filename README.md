@@ -10,13 +10,12 @@ For more details about the code and weekly progress during google summer of code
 To install the dependencies use singualrity container .
 
 ```bash
-1.Find about singularity hub here :[Singularity Hub](https://singularity-hub.org/)
 
-2.Pull the singularity image using 
+1.Pull the singularity image using 
 
 singularity pull --name clusteirng-image_and_audio.img shub://Himani2000/GSOC_2020:clustering
 
-3. Run the image using 
+2. Run the image using 
 
 singularity exec -B `pwd` [singularity_image_name ].img python3 [python file]
 ```
