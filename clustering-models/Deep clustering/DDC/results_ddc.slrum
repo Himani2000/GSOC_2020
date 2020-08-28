@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH -N 1 
+#SBATCH --mem=70gb
+#SBATCH --time=0-22:00:00 # 10 hrs  minutes 
+#SBATCH --output=mygpu_ddc_results.stdout
+#SBATCH --mail-user=hxn147@case.edu 
+#SBATCH --mail-type=ALL 
+#SBATCH --job-name="results ddc " 
+
+# Put commands for executing job below this line 
+# This example is loading the default Python module and then 
+# writing out the version of Python 
+module load gcc/6.3.0  openmpi/2.0.1
+module load python/3.6.6
+
+
+
+echo "Calling the python script for results pdf "
+
+python deep_clustering_image_vis.py
+
+echo "Complete"
