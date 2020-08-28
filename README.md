@@ -33,3 +33,10 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 1. Google summer of code 2020
 2. Redhenlab 
 ```
+
+## Contact 
+```
+Email:[negi.himani11@gmail.com](megi.himani11@gmail.com)
+Twitter:[https://twitter.com/himani__negi](https://twitter.com/himani__negi)
+
+```
