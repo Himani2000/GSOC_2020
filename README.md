@@ -2,7 +2,7 @@
 # Google Summer of code 2020
 
 This is my google summer of code project 2020. I worked with the Redhenlab organization. My project is based on the Image and Audio clustering and to deploy in Rapid Annotator. 
-For more details about the code and weekly progress during google summer of code visit my Gsoc blog: 
+For more details about the code and weekly progress during Google Summer of Code visit my GSoC blog: 
 [https://himani2000.github.io/gsoc/index.html](https://himani2000.github.io/gsoc/index.html)
 
 ## Installation
@@ -13,7 +13,7 @@ To install the dependencies use singualrity container .
 
 1.Pull the singularity image using 
 
-singularity pull --name clusteirng-image_and_audio.img shub://Himani2000/GSOC_2020:clustering
+singularity pull --name clustering-image_and_audio.img shub://Himani2000/GSOC_2020:clustering
 
 2. Run the image using 
 
